@@ -1,0 +1,689 @@
+/* ===== Visual theme (v5) =====
+   Loaded last. Restyles the existing markup without changing class names or layout structure. */
+
+:root {
+    --bg: #f1f5f6;
+    --panel: #ffffff;
+    --soft: #f7f9fa;
+    --ink: #13242b;
+    --muted: #64767e;
+    --line: #e1e8eb;
+    --accent: #0f766e;
+    --accent-dark: #0b5a54;
+    --accent-soft: #e6f4f2;
+    --danger: #c2410c;
+    --danger-dark: #9a3412;
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 9px;
+    --shadow-sm: 0 1px 2px rgba(19, 36, 43, 0.05);
+    --shadow-md: 0 6px 20px rgba(19, 36, 43, 0.07);
+    --focus: 0 0 0 3px rgba(15, 118, 110, 0.22);
+}
+
+body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+    letter-spacing: -0.01em;
+}
+
+/* ---------- Header ---------- */
+
+.app-header {
+    background: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow-sm);
+}
+
+.brand-mark {
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28);
+}
+
+.brand-text {
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.page-nav {
+    background: #edf2f4;
+    border-radius: 12px;
+    padding: 4px;
+}
+
+.page-nav .page-tab {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #5b6f77;
+    padding: 8px 14px;
+    border-radius: 9px;
+}
+
+.page-nav .page-tab.active {
+    background: #fff;
+    color: var(--accent);
+    box-shadow: 0 1px 3px rgba(19, 36, 43, 0.1), 0 0 0 1px rgba(19, 36, 43, 0.03);
+}
+
+.menu-btn {
+    border-radius: 11px;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Container and page headings ---------- */
+
+#container {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.page-head {
+    margin-bottom: 14px;
+}
+
+.page-head h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+/* ---------- Buttons ---------- */
+
+button {
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    padding: 9px 14px;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+}
+
+button:active {
+    transform: scale(0.985);
+}
+
+button:focus-visible {
+    outline: none;
+    box-shadow: var(--focus);
+}
+
+button:hover {
+    background: var(--accent-dark);
+}
+
+button.ghost {
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-sm);
+}
+
+button.ghost:hover {
+    background: var(--soft);
+    border-color: #cfdadf;
+}
+
+button.small {
+    padding: 6px 11px;
+    font-size: 0.82rem;
+    border-radius: 8px;
+}
+
+button.danger {
+    background: #fff;
+    color: var(--danger);
+    border: 1px solid #f3d3c4;
+}
+
+button.danger:hover {
+    background: #fff4ee;
+    color: var(--danger-dark);
+}
+
+button.install {
+    background: #1e40af;
+    border-color: #1e40af;
+}
+
+button.install:hover {
+    background: #1e3a8a;
+}
+
+button:disabled {
+    opacity: 0.55;
+}
+
+/* ---------- Inputs ---------- */
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select {
+    min-height: 42px;
+    padding: 9px 12px;
+    font-size: 0.93rem;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid #d4dee2;
+    border-radius: var(--radius-sm);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="text"]:hover,
+input[type="date"]:hover,
+input[type="time"]:hover,
+select:hover {
+    border-color: #b9c8ce;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: var(--focus);
+}
+
+/* ---------- Task form ---------- */
+
+.form {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    gap: 14px;
+}
+
+.form > input#taskInput {
+    font-size: 1rem;
+    min-height: 48px;
+    padding: 12px 14px;
+}
+
+.form-grid {
+    gap: 12px;
+}
+
+.form-grid label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #5b6f77;
+    text-transform: none;
+}
+
+.form-actions {
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.form-actions button[type="submit"] {
+    min-width: 140px;
+    padding: 11px 18px;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 6px rgba(15, 118, 110, 0.25);
+}
+
+/* ---------- Toolbar: date navigation and views ---------- */
+
+.toolbar {
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.nav-group {
+    gap: 6px;
+}
+
+.nav-group button {
+    padding: 8px 12px;
+    min-width: 40px;
+}
+
+#periodLabel {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.tabs {
+    background: #edf2f4;
+    border: none;
+    border-radius: 11px;
+    padding: 4px;
+}
+
+.tab {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #5b6f77;
+    padding: 7px 12px;
+    border-radius: 8px;
+}
+
+.tab:hover {
+    background: #fff;
+    color: var(--ink);
+}
+
+.tab.active {
+    background: #fff;
+    color: var(--accent);
+    box-shadow: 0 1px 3px rgba(19, 36, 43, 0.1);
+}
+
+/* ---------- Search and filters ---------- */
+
+#searchInput {
+    background: var(--soft);
+    margin-bottom: 10px;
+}
+
+#filterContainer {
+    gap: 6px;
+    margin-bottom: 18px;
+    padding: 4px;
+    background: #edf2f4;
+    border-radius: 11px;
+}
+
+#filterContainer button {
+    background: transparent;
+    color: #5b6f77;
+    border: none;
+    box-shadow: none;
+    padding: 8px 10px;
+}
+
+#filterContainer button:hover {
+    background: #fff;
+    color: var(--ink);
+}
+
+#filterContainer button.active {
+    background: #fff;
+    color: var(--accent);
+    box-shadow: 0 1px 3px rgba(19, 36, 43, 0.1);
+}
+
+/* ---------- Task list ---------- */
+
+.panel-title,
+.date-head {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 8px;
+    margin: 18px 0 10px;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.card.done {
+    border-left-color: #b8c6cb;
+    background: var(--soft);
+    opacity: 1;
+}
+
+.card input[type="checkbox"] {
+    width: 19px;
+    height: 19px;
+    accent-color: var(--accent);
+    border-radius: 6px;
+}
+
+.card-title {
+    font-size: 0.97rem;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.completed {
+    color: #93a4aa;
+}
+
+.meta {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.actions {
+    gap: 6px;
+}
+
+.empty {
+    padding: 26px 16px;
+    border: 1px dashed #cdd9de;
+    border-radius: var(--radius-md);
+    background: var(--soft);
+    font-size: 0.92rem;
+}
+
+/* Week view */
+.day-section {
+    gap: 8px;
+}
+
+.day-head {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 11px 14px;
+    box-shadow: var(--shadow-sm);
+    font-weight: 600;
+}
+
+.day-head:hover {
+    background: var(--soft);
+    border-color: #cfdadf;
+}
+
+.day-section.today .day-head {
+    border-color: var(--accent);
+    box-shadow: inset 3px 0 0 var(--accent), var(--shadow-sm);
+}
+
+/* Month view */
+.month-grid {
+    gap: 6px;
+}
+
+.month-head {
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 6px 4px;
+}
+
+.month-cell {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+    min-height: 92px;
+    padding: 7px;
+}
+
+.month-cell:hover {
+    background: var(--soft);
+    border-color: #cfdadf;
+}
+
+.month-cell.other {
+    background: var(--soft);
+    box-shadow: none;
+}
+
+.month-cell.today {
+    border-color: var(--accent);
+    box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.month-cell.selected {
+    box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.month-cell .num {
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.chip {
+    background: var(--accent);
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.chip.done {
+    background: #9fb1b7;
+}
+
+/* Year view */
+.year-grid {
+    gap: 12px;
+}
+
+.year-cell {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 14px;
+}
+
+.year-cell:hover {
+    background: var(--soft);
+    border-color: #cfdadf;
+}
+
+.year-cell.current {
+    border-color: var(--accent);
+    box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.bar {
+    height: 7px;
+    background: #e3eaed;
+}
+
+.bar-fill {
+    background: linear-gradient(90deg, #14b8a6, var(--accent));
+}
+
+/* Totals footer */
+h3 {
+    margin-top: 24px;
+    padding-top: 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+}
+
+h3 span {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+/* ---------- Settings page ---------- */
+
+.settings-page {
+    gap: 14px;
+}
+
+.settings-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    box-shadow: var(--shadow-sm);
+    gap: 14px;
+}
+
+.settings-card-title {
+    font-size: 0.72rem;
+    color: var(--muted);
+}
+
+.setting-name,
+.field-label {
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.setting-help {
+    font-size: 0.84rem;
+    color: var(--muted);
+}
+
+.settings-page input[type="text"],
+.settings-page select {
+    background: #fff;
+}
+
+.switch .slider {
+    background: #cdd8dc;
+}
+
+/* ---------- Alarm popups ---------- */
+
+.alarm {
+    background: #13242b;
+    border-radius: 14px;
+    box-shadow: 0 14px 36px rgba(19, 36, 43, 0.3);
+}
+
+.alarm button {
+    background: #fff;
+    color: var(--ink);
+}
+
+/* ---------- Offline note ---------- */
+
+.offline-note {
+    border-radius: var(--radius-md);
+    background: #fff7e8;
+    border-color: #f5d28a;
+}
+
+/* ---------- Phones ---------- */
+
+@media (max-width: 640px) {
+    body {
+        font-size: 14.5px;
+    }
+
+    #container {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .card {
+        padding: 11px 12px;
+    }
+
+    .form {
+        padding: 14px;
+    }
+
+    .form-actions button[type="submit"] {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .month-cell {
+        min-height: 54px;
+    }
+
+    .tab {
+        padding: 8px 8px;
+    }
+}
+
+/* Settings card headings should not inherit the totals-footer line */
+.settings-card h3,
+.settings-card-title {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-weight: 700;
+}
+
+/* ---------- Optional alarm switch (task form) ---------- */
+
+.alarm-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+}
+
+.alarm-toggle input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch-track {
+    position: relative;
+    flex-shrink: 0;
+    width: 42px;
+    height: 24px;
+    background: #cdd8dc;
+    border-radius: 999px;
+    transition: background 0.2s ease;
+}
+
+.switch-track::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.alarm-toggle input:checked + .switch-track {
+    background: var(--accent);
+}
+
+.alarm-toggle input:checked + .switch-track::before {
+    transform: translateX(18px);
+}
+
+.alarm-toggle input:focus-visible + .switch-track {
+    box-shadow: var(--focus);
+}
+
+.alarm-toggle-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.alarm-toggle-text strong {
+    font-size: 0.93rem;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.alarm-toggle-text small {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+#alarmFields {
+    margin-top: 12px;
+}

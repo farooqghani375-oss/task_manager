@@ -1,0 +1,46 @@
+/* ===== PWA additions ===== */
+
+button.install {
+    background: #1d4ed8;
+    color: #fff;
+    border: 1px solid #1d4ed8;
+}
+
+button.install:hover {
+    background: #1e40af;
+}
+
+.offline-note {
+    margin-bottom: 14px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    color: #7c4a03;
+    background: #fff4e0;
+    border: 1px solid #f2c97a;
+    border-radius: 8px;
+}
+
+/* Keep content clear of the notch and the home bar on phones */
+body {
+    padding-top: calc(40px + env(safe-area-inset-top));
+    padding-bottom: calc(40px + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: calc(16px + env(safe-area-inset-top));
+        padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    }
+
+    /* Alarm cards sit above the home bar */
+    #alarmPanel {
+        bottom: calc(16px + env(safe-area-inset-bottom));
+    }
+}
+
+/* Standalone (installed) app: no browser chrome, so tighten the top */
+@media (display-mode: standalone) {
+    body {
+        padding-top: calc(12px + env(safe-area-inset-top));
+    }
+}

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Plan your day, week, month and year with alarms and voice reminders.">
+    <title>Task Manager</title>
+
+    <!-- PWA: installable app -->
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#0f766e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Tasks">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="features.css">
+    <link rel="stylesheet" href="pwa.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="settings.css">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="plan.css">
+</head>
+<body data-page="tasks">
+
+<header class="app-header">
+    <div class="header-inner">
+        <div class="brand">
+            <img class="brand-mark" src="icons/icon-192.png" alt="" width="34" height="34">
+            <h1 class="brand-text">Task Manager</h1>
+        </div>
+
+        <button type="button" id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="headerActions">
+            <span class="menu-btn-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+
+        <nav id="headerActions" class="header-actions page-nav" aria-label="Pages">
+            <button type="button" class="page-tab active" data-page="tasks" aria-current="page">📋 Tasks</button>
+            <button type="button" class="page-tab" data-page="add">＋ Add task</button>
+            <button type="button" class="page-tab" data-page="targets">🎯 Targets</button>
+            <button type="button" id="settingsBtn" class="page-tab" data-page="settings" aria-expanded="false" aria-controls="settingsPanel">⚙ Settings</button>
+        </nav>
+    </div>
+</header>
+
+<div id="container">
+
+    <!-- Page 1: Tasks -->
+    <section id="tasksPage" class="page" aria-label="Tasks">
+
+        <p id="offlineNote" class="offline-note" hidden>You're offline. Your tasks are saved on this device, and alarms still work while the app is open.</p>
+
+        <nav class="toolbar" aria-label="Date and view">
+            <div class="nav-group">
+                <button type="button" id="prevBtn" class="ghost" aria-label="Previous">‹</button>
+                <button type="button" id="todayBtn" class="ghost">Today</button>
+                <button type="button" id="nextBtn" class="ghost" aria-label="Next">›</button>
+            </div>
+
+            <h2 id="periodLabel"></h2>
+
+            <div class="tabs" role="group" aria-label="View">
+                <button type="button" class="tab" data-view="day">Day</button>
+                <button type="button" class="tab" data-view="week">Week</button>
+                <button type="button" class="tab" data-view="month">Month</button>
+                <button type="button" class="tab" data-view="year">Year</button>
+                <button type="button" class="tab" data-view="all">All</button>
+            </div>
+        </nav>
+
+        <input type="text" id="searchInput" placeholder="Search tasks...">
+
+        <div id="filterContainer">
+            <button type="button" id="allBtn" class="active">All</button>
+            <button type="button" id="completedBtn">Completed</button>
+            <button type="button" id="pendingBtn">Pending</button>
+        </div>
+
+        <div id="taskContainer"></div>
+
+        <h3>
+            Total: <span id="totalTasks">0</span>
+            · Completed: <span id="doneTasks">0</span>
+        </h3>
+
+    </section>
+
+    <!-- Page 2: Add task -->
+    <section id="addPage" class="page" aria-labelledby="addTitle" hidden>
+
+        <div class="page-head">
+            <h2 id="addTitle">Add task</h2>
+        </div>
+
+        <form id="taskForm" class="form" autocomplete="off">
+
+            <input type="text" id="taskInput" placeholder="What do you need to do?" maxlength="120">
+
+            <div class="form-grid">
+                <label>Date
+                    <input type="date" id="dateInput">
+                </label>
+
+                <label>Start time
+                    <input type="time" id="timeInput">
+                </label>
+
+                <label>Study hours
+                    <input type="number" id="hoursInput" min="0" max="24" step="0.5" placeholder="Optional">
+                </label>
+            </div>
+
+            <label class="alarm-toggle">
+                <input type="checkbox" id="alarmToggle">
+                <span class="switch-track" aria-hidden="true"></span>
+                <span class="alarm-toggle-text">
+                    <strong>Set an alarm</strong>
+                    <small>Optional. Off means this task is saved without any reminder.</small>
+                </span>
+            </label>
+
+            <div id="alarmFields" class="form-grid" hidden>
+                <label>Remind me
+                    <select id="remindSelect">
+                        <option value="none">No reminder</option>
+                        <option value="0">At start time</option>
+                        <option value="5">5 min before</option>
+                        <option value="10" selected>10 min before</option>
+                        <option value="15">15 min before</option>
+                        <option value="30">30 min before</option>
+                        <option value="60">1 hour before</option>
+                        <option value="120">2 hours before</option>
+                    </select>
+                </label>
+
+                <label>Extra alarm at
+                    <input type="time" id="alarmInput">
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="cancelEditBtn" class="ghost" hidden>Cancel</button>
+                <button type="submit" id="taskBtn">Add Task</button>
+            </div>
+
+        </form>
+
+    </section>
+
+    <!-- Page 3: Targets and course planner -->
+    <section id="targetsPage" class="page" aria-labelledby="targetsTitle" hidden>
+
+        <div class="page-head">
+            <h2 id="targetsTitle">Targets</h2>
+        </div>
+
+        <div class="settings-card">
+            <h3 class="settings-card-title">Weekly targets</h3>
+            <div id="targetList" class="target-list"></div>
+
+            <form id="targetForm" class="target-form" autocomplete="off">
+                <label class="field">
+                    <span class="field-label">Week starting</span>
+                    <input type="date" id="tgWeek" required>
+                </label>
+                <label class="field">
+                    <span class="field-label">Goal (hours)</span>
+                    <input type="number" id="tgGoal" min="0.5" max="168" step="0.5" placeholder="e.g. 10" required>
+                </label>
+                <label class="field">
+                    <span class="field-label">Name (optional)</span>
+                    <input type="text" id="tgTitle" maxlength="60" placeholder="e.g. Finish chapter 3">
+                </label>
+                <div class="btn-row">
+                    <button type="submit" class="primary">Add target</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="settings-card">
+            <h3 class="settings-card-title">Plan from a course PDF</h3>
+            <p class="setting-help">Upload a course PDF (up to 3 MB). AI splits it into study sessions with dates. Review the plan, then save it as tasks and weekly targets.</p>
+
+            <form id="planForm" class="target-form" autocomplete="off">
+                <label class="field">
+                    <span class="field-label">Course PDF</span>
+                    <input type="file" id="planFile" accept="application/pdf">
+                </label>
+
+                <div class="form-grid">
+                    <label class="field">
+                        <span class="field-label">Start date</span>
+                        <input type="date" id="planStart" required>
+                    </label>
+                    <label class="field">
+                        <span class="field-label">Hours per study day</span>
+                        <input type="number" id="planHours" min="0.5" max="12" step="0.5" value="2" required>
+                    </label>
+                </div>
+
+                <fieldset class="choice-set">
+                    <legend class="field-label">Study days</legend>
+                    <div class="choice-row">
+                        <label class="choice"><input type="checkbox" name="wd" value="0" checked><span>Mon</span></label>
+                        <label class="choice"><input type="checkbox" name="wd" value="1" checked><span>Tue</span></label>
+                        <label class="choice"><input type="checkbox" name="wd" value="2" checked><span>Wed</span></label>
+                        <label class="choice"><input type="checkbox" name="wd" value="3" checked><span>Thu</span></label>
+                        <label class="choice"><input type="checkbox" name="wd" value="4" checked><span>Fri</span></label>
+                        <label class="choice"><input type="checkbox" name="wd" value="5"><span>Sat</span></label>
+                        <label class="choice"><input type="checkbox" name="wd" value="6"><span>Sun</span></label>
+                    </div>
+                </fieldset>
+
+                <fieldset class="choice-set">
+                    <legend class="field-label">Split the course by</legend>
+                    <div class="choice-row">
+                        <label class="choice"><input type="radio" name="gran" value="days" checked><span>Days</span></label>
+                        <label class="choice"><input type="radio" name="gran" value="weeks"><span>Weeks</span></label>
+                    </div>
+                </fieldset>
+
+                <div class="btn-row">
+                    <button type="submit" id="planBtn" class="primary">Generate plan</button>
+                </div>
+                <p id="planStatus" class="setting-help" role="status"></p>
+            </form>
+
+            <div id="planPreview" class="plan-preview" hidden>
+                <p id="planSummary" class="plan-summary"></p>
+                <ul id="planList" class="plan-list"></ul>
+                <div class="btn-row">
+                    <button type="button" id="planSaveBtn" class="primary">Save plan</button>
+                    <button type="button" id="planDiscardBtn" class="ghost">Discard</button>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Page 4: Settings -->
+    <section id="settingsPanel" class="settings-page" aria-labelledby="settingsTitle" hidden>
+
+        <div class="page-head">
+            <h2 id="settingsTitle">Settings</h2>
+        </div>
+
+        <div class="settings-card">
+            <h3 class="settings-card-title">App</h3>
+            <div class="setting">
+                <div class="setting-head">
+                    <span class="setting-name">Install app</span>
+                    <button id="installBtn" class="install" type="button" hidden>📲 Install app</button>
+                </div>
+                <p class="setting-help">Add Task Manager to your home screen or desktop so it opens like an app. Install works from the https:// web address.</p>
+            </div>
+            <div class="setting">
+                <span class="setting-name">Offline use</span>
+                <p class="setting-help" id="offlineStatus">Checking…</p>
+            </div>
+        </div>
+
+        <div class="settings-card">
+            <h3 class="settings-card-title">Notifications</h3>
+            <div class="setting">
+                <div class="setting-head">
+                    <span class="setting-name">Desktop notifications</span>
+                    <button id="notifyBtn" class="toggle" type="button" aria-pressed="false">🔔 Notifications: Off</button>
+                </div>
+                <p class="setting-help">Pop-up alerts when a reminder fires. Turning this off stops them in this app. To block them completely, change this site's notification permission in your browser.</p>
+            </div>
+            <input type="checkbox" id="optNotify" hidden>
+        </div>
+
+        <div class="settings-card">
+            <h3 class="settings-card-title">Alarm</h3>
+
+            <label class="field">
+                <span class="field-label">Alarm style</span>
+                <select id="alarmStyle">
+                    <option value="both">Ringtone + spoken message</option>
+                    <option value="ringtone">Ringtone only</option>
+                    <option value="voice">Spoken message only (repeats)</option>
+                </select>
+            </label>
+
+            <label class="field">
+                <span class="field-label">Name to say</span>
+                <input type="text" id="userName" maxlength="30" placeholder="Abubakar">
+            </label>
+
+            <label class="field">
+                <span class="field-label">Message at alarm time</span>
+                <input type="text" id="voiceTemplate" maxlength="120">
+            </label>
+
+            <label class="field">
+                <span class="field-label">Message before start</span>
+                <input type="text" id="reminderTemplate" maxlength="120">
+            </label>
+
+            <p class="setting-help">Use {name} for your name, {task} for the task and {minutes} for minutes. Example: "{name}, it's time to {task}." becomes "Abubakar, it's time to do the walk." Name tasks as nouns like "walk" or "homework". The message repeats until you dismiss the alarm.</p>
+
+            <div class="btn-row">
+                <button type="button" id="testVoiceBtn" class="small">🗣 Test message</button>
+                <button type="button" id="exportIcsBtn" class="small ghost">📅 Export to calendar</button>
+            </div>
+        </div>
+
+        <div class="settings-card">
+            <h3 class="settings-card-title">Alarm sound</h3>
+
+            <label class="field">
+                <span class="field-label">Sound</span>
+                <select id="soundSelect"></select>
+            </label>
+
+            <div class="btn-row">
+                <button type="button" id="testSoundBtn" class="small">▶ Test sound</button>
+                <button type="button" id="uploadBtn" class="small ghost">Upload ringtone</button>
+                <button type="button" id="removeRingtoneBtn" class="small ghost" hidden>Remove custom</button>
+                <input type="file" id="ringtoneFile" accept="audio/*" hidden>
+            </div>
+
+            <p class="setting-help" id="ringtoneInfo">Upload an MP3, WAV, OGG or M4A file up to 10 MB to use as your alarm.</p>
+        </div>
+
+    </section>
+
+</div>
+
+<div id="alarmPanel" aria-live="assertive"></div>
+
+<script src="nav.js"></script>
+<script src="script.js"></script>
+<script src="plan.js"></script>
+</body>
+</html>

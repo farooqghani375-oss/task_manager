@@ -1,0 +1,74 @@
+/* ===== Page navigation: Tasks | Add task | Settings ===== */
+
+.page-nav {
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    background: #eef2f7;
+    border-radius: 12px;
+}
+
+.page-nav .page-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    border-radius: 9px;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.page-nav .page-tab:hover:not(.active) {
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.page-nav .page-tab.active {
+    background: #fff;
+    color: var(--accent);
+    box-shadow: 0 1px 3px rgba(23, 40, 47, 0.12);
+}
+
+.page-nav .page-tab:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Pages */
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Phone: the page list lives inside the hamburger menu */
+@media (max-width: 640px) {
+    .page-nav {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        padding: 8px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        box-shadow: 0 16px 40px rgba(23, 40, 47, 0.18);
+    }
+
+    .page-nav .page-tab {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 12px 14px;
+        font-size: 1rem;
+    }
+}
+
+/* Safety net: the hidden attribute always hides a page or panel */
+[hidden] {
+    display: none !important;
+}
